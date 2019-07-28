@@ -1,6 +1,6 @@
 /****************************
  * Minesweeper by Wu Yuhang
- * Version N/A
+ * Version 1.0.0 INSIDER
 ****************************/
 
 #include<iostream>
