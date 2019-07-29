@@ -133,7 +133,7 @@ void welcome() {
     cout << "Select difficult level." << endl << "Level 1: 20 mines , 10 * 10 (EASY)" << endl 
     << "Level 2: 80 mines , 20 * 20 (MEDIUM)" << endl 
     << "Level 3: 500 mines , 50 * 50 (DIFFICULT)" << endl;
-    
+
     char c; cin >> c;
     while (c != '1' && c != '2' && c != '3') {
         cout << "Wrong number, please input again." << endl;
@@ -211,7 +211,7 @@ void open(int x, int y, bool &ff) {
             do {
                 xx = rand() / (RAND_MAX / size);
                 yy = rand() / (RAND_MAX / size);
-            } while (!m[x][y]);
+            } while (m[x][y]);
             m[xx][yy] = true;
 
             memset(num, 0, sizeof(num));    //全部初始化
