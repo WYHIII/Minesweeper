@@ -1,6 +1,6 @@
 /****************************
  * Minesweeper by Wu Yuhang
- * Version N/A
+ * Version 1.0.1 INSIDER
 ****************************/
 
 #include<iostream>
@@ -13,7 +13,7 @@
 #include<windows.h>
 #include<conio.h>
 
-#define VERSION "0.1.0 (INSIDER)"
+#define VERSION "1.0.1 (INSIDER)"
 
 using std::cin;
 using std::cout;
@@ -41,9 +41,12 @@ const int dy[] = {1, 1, 1, 0, -1, -1, -1, 0};
 bool m[MAXN][MAXN], vis[MAXN][MAXN], f[MAXN][MAXN];
 int num[MAXN][MAXN], level, n, size, flags;
 
+HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //color settings
+
 int main() {
     start();
     play();
+
     return 0;
 }
 
@@ -91,9 +94,26 @@ void draw() {
     for (int i = 1; i <= size; i++) {
         cout << setw(3) << i; putchar('|');
         for (int j = 1; j <= size; j++) {
-            if (f[i][j]) cout << " ! ";
+            if (f[i][j]) {
+                SetConsoleTextAttribute(hConsole, 10); cout << " ! ";   //colorful drawing
+                SetConsoleTextAttribute(hConsole, 7);
+            }
             else if (!vis[i][j]) cout << " * ";
-            else cout << ' ' << num[i][j] << ' ';
+            else {
+                switch(num[i][j]) {
+                    case 0: SetConsoleTextAttribute(hConsole, 15); break;
+                    case 1: SetConsoleTextAttribute(hConsole, 1); break;
+                    case 2: SetConsoleTextAttribute(hConsole, 2); break;
+                    case 3: SetConsoleTextAttribute(hConsole, 6); break;
+                    case 4: SetConsoleTextAttribute(hConsole, 12); break;
+                    case 5: SetConsoleTextAttribute(hConsole, 4); break;
+                    case 6: SetConsoleTextAttribute(hConsole, 13); break;
+                    case 7: SetConsoleTextAttribute(hConsole, 14); break;
+                    case 8: SetConsoleTextAttribute(hConsole, 11); break;
+                }
+                cout << ' ' << num[i][j] << ' ';
+                SetConsoleTextAttribute(hConsole, 7);
+            }
         }
         cout << endl;
     }

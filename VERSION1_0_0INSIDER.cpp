@@ -13,7 +13,7 @@
 #include<windows.h>
 #include<conio.h>
 
-#define VERSION "0.1.0 (INSIDER)"
+#define VERSION "1.0.0 (INSIDER)"
 
 using std::cin;
 using std::cout;
