@@ -122,12 +122,18 @@ void draw() {
         }
         cout << endl;
     }
-    cout << "   |" << endl << "   Y" << endl << "If you want to open a cell, input like this:'o 5 9'" << endl << "if you want to flag a cell, input like this:'f 5 9'" << endl << "if you want to cancle what you've done, input like this:'d 5 9'" << endl << endl;
+    cout << "   |" << endl << "   Y" << endl << flags << " Flags left." << "  " << n << " Mines in total." << endl << endl 
+    << "If you want to open a cell, input like this:'o 5 9'" << endl 
+    << "if you want to flag a cell, input like this:'f 5 9'" << endl 
+    << "if you want to cancle what you've done, input like this:'d 5 9'" << endl << endl;
 }
 
 void welcome() {
     cout << "Welcome to Minesweeper " << VERSION << "." << endl << "Press any key to continue."; getch(); system("cls");
-    cout << "Select difficult level." << endl << "Level 1: 20 mines , 10 * 10 (EASY)" << endl << "Level 2: 80 mines , 20 * 20 (MEDIUM)" << endl << "Level 3: 500 mines , 50 * 50 (DIFFICULT)" << endl;
+    cout << "Select difficult level." << endl << "Level 1: 20 mines , 10 * 10 (EASY)" << endl 
+    << "Level 2: 80 mines , 20 * 20 (MEDIUM)" << endl 
+    << "Level 3: 500 mines , 50 * 50 (DIFFICULT)" << endl;
+    
     char c; cin >> c;
     while (c != '1' && c != '2' && c != '3') {
         cout << "Wrong number, please input again." << endl;
