@@ -95,7 +95,7 @@ void draw() {
         cout << setw(3) << i; putchar('|');
         for (int j = 1; j <= size; j++) {
             if (f[i][j]) {
-                SetConsoleTextAttribute(hConsole, 10); cout << " ! ";   //colorful drawing
+                SetConsoleTextAttribute(hConsole, 4); cout << " ! ";   //colorful drawing
                 SetConsoleTextAttribute(hConsole, 7);
             }
             else if (!vis[i][j]) cout << " * ";
