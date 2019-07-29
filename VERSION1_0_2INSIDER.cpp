@@ -1,4 +1,4 @@
-2/****************************
+/****************************
  * Minesweeper by Wu Yuhang
  * Version 1.0.2 INSIDER
 ****************************/
@@ -31,14 +31,15 @@ inline void gameover();
 void win();
 bool check(int, int);
 void open(int, int);
-void flag(int, int);
-void del(int, int);
+inline void flag(int, int);
+inline void del(int, int);
+void dfs(int, int);
 
 const int MAXN = 100 + 3;
 const int dx[] = {-1, 0, 1, 1, 1, 0, -1, -1};
 const int dy[] = {1, 1, 1, 0, -1, -1, -1, 0};
 
-bool m[MAXN][MAXN], vis[MAXN][MAXN], f[MAXN][MAXN];
+bool m[MAXN][MAXN], vis[MAXN][MAXN], f[MAXN][MAXN], first_open_cell = true;
 int num[MAXN][MAXN], level, n, size, flags;
 
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //color settings
@@ -172,20 +173,65 @@ void play() {
 }
 
 void open(int x, int y) {
+    if (first_open_cell) {
+        first_open_cell = false;
+        if (m[x][y]) {
+            m[x][y] = false;    //第一次就踩到雷
+            int xx, yy;
+            do {
+                xx = rand() / (RAND_MAX / size);
+                yy = rand() / (RAND_MAX / size);
+            } while (!m[x][y]);
+            m[xx][yy] = true;
+
+            memset(num, 0, sizeof(num));    //全部初始化
+
+            for (int i = 1; i <= size; i++) {
+                for (int j = 1; j <= size; j++) {
+                    if (!m[i][j]) {
+                        for (int k = 0; k < 8; k++) {
+                            int xx = i + dx[k];
+                            int yy = j + dy[k];
+                            num[i][j] += m[xx][yy] ? 1 : 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     if (m[x][y]) gameover();
     if (f[x][y]) {cout << "Can't open this cell.Flags on." << endl << "Press any key to continue." << endl; getch(); return;}
-    vis[x][y] = true;
+    dfs(x, y);
 }
 
-void flag(int x, int y) {
+inline void flag(int x, int y) {
     if (!flags) {cout << "You use out of flags.Try to remove some of them." << endl << "Press any key to continue." << endl; getch(); return;}
     if (vis[x][y]) {cout << "Can't use flag.You've visited this cell." << endl << "Press any key to continue." << endl; getch(); return;}
+    if (f[x][y]) {cout << "Can't use flag.This cell has already had flag." << endl << "Press any key to continue." << endl; getch(); return;}
     f[x][y] = true; flags--;
 
     win();
 }
 
-void del(int x, int y) {
+inline void del(int x, int y) {
     if (!f[x][y]) {cout << "This cell doesn't have flag." << endl << "Press any key to continue." << endl; getch(); return;}
     f[x][y] = false; flags++;
 }
+
+void dfs(int x, int y) {
+    if (x < 1 || x > size || y < 1 || y > size) return;
+    if (vis[x][y]) return;
+    if (num[x][y]) {vis[x][y] = true; return;}
+
+    vis[x][y] = true;
+
+    dfs(x-1, y-1);
+    dfs(x-1, y);
+    dfs(x-1, y+1);
+    dfs(x, y-1);
+    dfs(x, y+1);
+    dfs(x+1, y-1);
+    dfs(x+1, y);
+    dfs(x+1, y+1);
+}   
